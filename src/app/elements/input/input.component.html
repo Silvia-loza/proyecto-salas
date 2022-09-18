@@ -1,0 +1,15 @@
+<form #salaForm="ngForm" class="input-group">
+ <label for="max" class="my-label">{{maxLabel}}</label>
+ <input class="my-input" name="max" id="max" type="number" value={{max}} [(ngModel)]="max">
+
+
+ <div class="input-group">
+ <label for="ocupacion" class="my-label">{{ocupaLabel}}</label>
+ <input class="my-input" name="ocupacion" id="ocupacion" type="number" value={{ocupacion}} [(ngModel)]="ocupacion">
+ <label class="input-group-addon" for="ocupation">%</label> 
+</div>
+ <!-- <div class="botones"> -->
+ <app-button (click)="modificarSala(id, ocupacion, max)"></app-button>
+ <!-- <app-button [label]="'Borrar'"></app-button> -->
+ <!-- </div> -->
+</form>

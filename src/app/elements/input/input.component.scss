@@ -1,0 +1,35 @@
+*{
+    color: var(--color-main);
+    font-family: var(--font-main);
+}
+.my-input {
+   border-radius: var(--radious-buttons);
+   border: 1px solid;
+   padding: 5px;
+   
+}
+.input-group {
+    display:flex;
+    flex-direction: column;
+}
+label {
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+app-button {
+     align-self: flex-end;
+    margin-top:0.5em;
+}
+.botones {
+    display: flex;
+    flex-direction: row-reverse;
+}
+.input-group-addon {
+    position: absolute;
+    width: 10rem;
+    margin-left: 13.5rem;
+    margin-top: 4rem;
+    color: var(--color-main);
+    z-index: 99;
+}

@@ -1,0 +1,27 @@
+* {
+  color: var(--color-main);
+  font-family: var(--font-main);
+  margin: 0 auto;
+  padding: 2%;
+}
+.sala-header {
+  display:flex;
+  flex-direction: column;
+}
+select {
+    width: 10%;
+    padding: 5px;
+    border-radius: var(--radious-buttons);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  #main-title {
+    color: var(--color-main);
+    color: var(--color-main);
+    font-size: xx-large;
+    font-weight: 800;
+    display: block;
+    padding:revert;
+  
+  }

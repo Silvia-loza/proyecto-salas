@@ -1,0 +1,41 @@
+* {
+    color: var(--color-main);
+    font-family: var(--font-main);
+    padding: 0.5em;
+   
+ }
+ .sala-header {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+ .main-container {
+   display: flex;
+   flex-direction: column;
+    border: 2px solid var(--color-main);
+    border-radius: var(--radious-containers);
+
+   
+ }
+ .title-container {
+   display: flex;
+   flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+ }
+ .card-container{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 10px;
+
+ }
+
+
+ @media screen and (max-width: 575px){
+ 
+ 
+ 
+ 
+}
