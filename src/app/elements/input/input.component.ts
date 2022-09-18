@@ -21,7 +21,7 @@ export class InputComponent {
   @Input () ocupacion !: number;
   @Input () id !: number;
   @Input() maxLabel : string = 'Capacidad máxima';
-  @Input() ocupaLabel : string = 'Ocuapción';
+  @Input() ocupaLabel : string = 'Ocupación';
   @Input() planta !: Planta;
   @Input() sala : Sala = {id: 1,max: 100, ocupacion: 10}
 
