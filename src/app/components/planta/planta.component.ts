@@ -58,9 +58,14 @@ ngOnInit(): void {
   }
 
   addSala(salas: any): any {
-    let id = salas[this.planta.salas.length - 1].id + 1;
-    this.planta.salas.push({id: id, max: 100, ocupacion: 0});
-    this.successNotification();
+      let id;
+      if(!salas.length){
+        id = 1;
+     } else {
+        id = salas[this.planta.salas.length - 1].id + 1;
+     }
+      this.planta.salas.push({id: id, max: 100, ocupacion: 0});
+      this.successNotification();  
    }
 
    modificarSala(sala: any) :void {
