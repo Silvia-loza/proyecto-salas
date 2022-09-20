@@ -24,6 +24,7 @@ app-button {
 .botones {
     display: flex;
     flex-direction: row-reverse;
+    justify-content: space-between;
 }
 .icon {
     width: 0.9em;
@@ -42,5 +43,17 @@ app-button {
      height: auto;
      margin-top: -1em;
 
+    }
+   
+   app-button{
+            align-self: center;
+        }
+}
+
+@media screen and (max-width: 680px) {
+    .botones {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;    
     }
 }
