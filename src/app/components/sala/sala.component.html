@@ -1,4 +1,4 @@
 <div class="card-sala"> 
     <h3>Sala {{salaId}}</h3>
-    <app-input (modificarSalas)="modificarSala($event)" [id]="salaId" [max]="max" [ocupacion]="ocupacion"></app-input>
+    <app-input (borrarSalaEv)="borrarSala($event)" (modificarSalas)="modificarSala($event)" [id]="salaId" [max]="max" [ocupacion]="ocupacion"></app-input>
 </div>

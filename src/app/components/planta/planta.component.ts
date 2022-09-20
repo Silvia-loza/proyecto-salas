@@ -102,7 +102,31 @@ ngOnInit(): void {
      }
   }
 
-  deleteSala(salas:any): any {
-    //console.log('Aqui se borran salas ', salas)
+  deleteSala(id :number): any {
+    let indexBorrado;
+
+    if(this.planta.idPlanta == 1) {
+         for (let salaBorrar of this.plantaUno.salas) { 
+           if (salaBorrar.id == id){
+                indexBorrado = this.plantaUno.salas.indexOf(salaBorrar)
+                this.plantaUno.salas.splice(indexBorrado, 1)
+           }
+         }
+          
+    } else if (this.planta.idPlanta == 2){
+      for (let salaBorrar of this.plantaDos.salas) { 
+        if (salaBorrar.id == id){
+             indexBorrado = this.plantaDos.salas.indexOf(salaBorrar)
+             this.plantaDos.salas.splice(indexBorrado, 1)
+          }
+        }           
+    } else if (this.planta.idPlanta == 3) {     
+      for (let salaBorrar of this.plantaTres.salas) { 
+        if (salaBorrar.id == id){
+             indexBorrado = this.plantaTres.salas.indexOf(salaBorrar)
+             this.plantaTres.salas.splice(indexBorrado, 1)
+          }
+        }           
+      }
    }
-  }
+}

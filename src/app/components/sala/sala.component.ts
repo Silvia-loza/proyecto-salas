@@ -13,9 +13,14 @@ export class SalaComponent {
 @Input () sala !: Sala
 
 @Output() nuevaOcupacion =  new EventEmitter <any>();
+@Output() borraSalaEvSal = new EventEmitter <any>();
 
   modificarSala(sala: any) {
     this.nuevaOcupacion.emit(sala);
+  }
+
+  borrarSala(id: number) {
+    this.borraSalaEvSal.emit(id);
   }
 
 }

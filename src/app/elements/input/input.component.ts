@@ -15,7 +15,7 @@ interface inputForm {
   styleUrls: ['./input.component.scss']
 })
 export class InputComponent {
-
+  @Output() borrarSalaEv = new EventEmitter <any>();
   @Output() modificarSalas = new EventEmitter <any>();
   @Input () max !: number;
   @Input () ocupacion !: number;
@@ -42,6 +42,10 @@ export class InputComponent {
     this.salaModificar.max = max;
     this.modificarSalas.emit(this.salaModificar);
     this.successNotification();
+  }
+
+  borrarSala (id: number): void {
+    this.borrarSalaEv.emit(id);
   }
 
 }
