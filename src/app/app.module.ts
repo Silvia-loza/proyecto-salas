@@ -9,6 +9,7 @@ import { PlantaComponent } from './components/planta/planta.component';
 import { ButtonComponent } from './elements/button/button.component';
 import { InputComponent } from './elements/input/input.component';
 import { FormsModule } from '@angular/forms';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     HeaderComponent,
     PlantaComponent,
     ButtonComponent,
-    InputComponent
+    InputComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

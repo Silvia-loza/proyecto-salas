@@ -1,11 +1,13 @@
  <div class="main-container">
    <div class="title-container"> 
       <h1>Planta {{idPlanta}}</h1>
+      <input  class="search-box" name="criteria" id="criteria" type="number" placeholder="¿Para cuántas personas necesitas la sala?" [(ngModel)]="criteria">
       <app-button (click)="addSala(planta.salas)" [label]="'Añadir sala'"></app-button>
+      
    </div>
    <div class="card-container">
-        <div *ngFor="let sala of planta.salas">
-          <app-sala (borraSalaEvSal)="deleteSala(sala.id)"     [ocupacion]="sala.ocupacion" (nuevaOcupacion)="modificarSala($event)"  [max]="sala.max" [salaId]="sala.id"></app-sala>   
+        <div *ngFor="let sala of (planta.salas | filter: criteria) ">
+          <app-sala (borraSalaEvSal)="deleteSala(sala.id)" [ocupacion]="sala.ocupacion" (nuevaOcupacion)="modificarSala($event)"  [max]="sala.max" [salaId]="sala.id"></app-sala>   
          </div>
     </div>
 </div>

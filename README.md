@@ -35,10 +35,10 @@ La comunicacíon de datos entre componentes fue quizás mi mayor challenge.
 
 ## Por implementar 🚧
 
-Borrado de salas 
+Borrado de salas // Update: implementado ✅
+
+Filtrar las salas por capacidad y ocupación // filtrado por capacidad implementado ✅ por ocupación [WIP]. 
 
 Simular la conexión con backend con una API mockeada.
-
-Filtrar las salas por capacidad y ocupación
 
 Testing  / Me hubuese gustado también tener tiempo a implementar la parte de testing también.
