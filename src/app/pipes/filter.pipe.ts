@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Sala } from '../models/Sala';
 
 @Pipe({
   name: 'filter',
@@ -7,10 +8,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(arraySalas: any, capacidad: any): any {
+  transform(arraySalas: Sala[], capacidad: any): any {
     
     //Filtro capacidad salas
-    let result: number[] = [];
+    let result: Sala[] = [];
     let maxCapacidad : number = parseInt(capacidad);
     
     for (const sala of arraySalas) {
