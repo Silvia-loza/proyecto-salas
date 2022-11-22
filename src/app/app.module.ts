@@ -10,6 +10,7 @@ import { ButtonComponent } from './elements/button/button.component';
 import { InputComponent } from './elements/input/input.component';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './pipes/filter.pipe';
+import { FilterOccupationPipe } from './pipes/filter-occupation.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     PlantaComponent,
     ButtonComponent,
     InputComponent,
-    FilterPipe
+    FilterPipe,
+    FilterOccupationPipe
   ],
   imports: [
     BrowserModule,

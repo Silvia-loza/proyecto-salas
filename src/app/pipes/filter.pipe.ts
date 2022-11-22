@@ -7,15 +7,19 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(arraySalas: any, max: any): any {
+  transform(arraySalas: any, capacidad: any): any {
+    
+    //Filtro capacidad salas
     let result: number[] = [];
-    let maxNumber : number = parseInt(max);
+    let maxCapacidad : number = parseInt(capacidad);
+    
     for (const sala of arraySalas) {
-      if(!maxNumber) {
-        console.log(`no value in search box ${max}`);
-        return arraySalas}
-      else if(sala.max >= maxNumber){
-        console.log(`Seraching for salas with  ${max} capacity or more`);
+      if(!maxCapacidad) {
+       
+        return arraySalas
+
+      } else if(sala.max >= maxCapacidad) {
+       
         result = [...result, sala]
       }
     }

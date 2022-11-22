@@ -14,14 +14,15 @@ export class PlantaComponent implements OnInit {
   public selected !: number;
   public planta !: Planta
   public criteria !: any;
+  public ocupacionFiltro !: any;
   
   
   public plantaUno : Planta = {
     idPlanta: 1,
     salas :[
     {id: 1, max: 100, ocupacion: 10},
-    {id: 2, max: 150, ocupacion: 10},
-    {id: 3, max: 100, ocupacion: 0}
+    {id: 2, max: 150, ocupacion: 20},
+    {id: 3, max: 100, ocupacion: 50}
   ]
 }
 
@@ -52,7 +53,7 @@ ngOnInit(): void {
   }      
  ngOnChanges(): void { 
     this.onPlantaUpdates();
-    parseInt(this.criteria);
+    parseInt(this.criteria, this.ocupacionFiltro);
   }
     
   successNotification() {
