@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, Output , OnChanges} from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 import Swal from 'sweetalert2';
 import { Planta } from '../../models/Planta';
 @Component({
@@ -15,7 +16,7 @@ export class PlantaComponent implements OnInit {
   public planta !: Planta
   public criteria !: any;
   public ocupacionFiltro !: any;
-  
+  public plantas : Planta[] = [];
   
   public plantaUno : Planta = {
     idPlanta: 1,
@@ -44,9 +45,16 @@ public plantaTres : Planta = {
   ]
 }
 
-constructor() {}
+constructor(private readonly dataSvc: DataService) {}
 
 ngOnInit(): void {
+  //Petición a API
+    this.dataSvc.getSalas()
+    .subscribe(res => {
+        console.log('llamada APi dentro')
+        console.log(res)
+        this.plantas = [...res];
+    } )
     this.planta = this.plantaUno; 
     this.selected = 1;
     this.idPlanta = 1;

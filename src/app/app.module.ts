@@ -11,7 +11,7 @@ import { InputComponent } from './elements/input/input.component';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './pipes/filter.pipe';
 import { FilterOccupationPipe } from './pipes/filter-occupation.pipe';
-
+import { HttpClientModule } from '@angular/common/http'
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +26,8 @@ import { FilterOccupationPipe } from './pipes/filter-occupation.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
