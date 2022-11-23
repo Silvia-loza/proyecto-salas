@@ -57,7 +57,21 @@ ngOnInit(): void {
   }
     
   successNotification() {
-    Swal.fire('Perfecto', `Sala nueva añadida con éxito`, 'success');
+    Swal.fire({
+      title: 'Nueva sala añadida con éxito',
+      showConfirmButton: false,
+      icon: 'success',
+      timer: 1000
+    });
+  }
+
+  borradoNotification() {
+    Swal.fire({
+      title: 'Sala eliminada con éxito',
+      showConfirmButton: false,
+      icon: 'warning',
+      timer: 1000
+    });
   }
 
   addSala(salas: any): any {
@@ -136,5 +150,6 @@ ngOnInit(): void {
           }
         }           
       }
+      this.borradoNotification();
    }
 }

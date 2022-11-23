@@ -33,8 +33,16 @@ export class InputComponent {
 
   constructor() { }
    successNotification() {
-   Swal.fire('Genial', 'se han guardado tus cambios', 'success');
+      Swal.fire( {title: 'Cambios guardados!',
+        showConfirmButton: false,
+        icon: 'success',
+        timer: 1000
+      }
+    );
    }
+  
+  
+  
   
   modificarSala(id: number, ocupacion: number, max: number): void {
     this.salaModificar.id = id;
