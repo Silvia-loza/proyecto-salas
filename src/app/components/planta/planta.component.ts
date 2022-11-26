@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, Output , OnChanges} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output , OnChanges, ChangeDetectorRef} from '@angular/core';
 import { Sala } from 'src/app/models/Sala';
 import { DataService } from 'src/app/services/data.service';
 import Swal from 'sweetalert2';
@@ -22,22 +22,19 @@ export class PlantaComponent implements OnInit {
   public plantaUno !: Planta
   public plantaDos !: Planta
   public plantaTres !: Planta
-  public data !: any;
+  public data !: any
 
-  // = {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
-  // =  {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
-  // = {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
-
-constructor(private readonly dataSvc: DataService) {}
+constructor(private readonly dataSvc: DataService, private cd: ChangeDetectorRef) {}
 
 ngOnInit(): void {
 
   //Petición a API
-  console.log(this.plantas)
+
   this.dataSvc.getSalas()
   .subscribe(res => {
       this.data = [...res];
       this.plantas = this.data;
+
       this.plantas.map(planta => { 
         if(planta.idPlanta == 1){
           this.plantaUno = planta
@@ -47,25 +44,27 @@ ngOnInit(): void {
         } else { 
           this.plantaTres = planta
         }
+        this.cd.detectChanges();
        
-        // this.selected = 1;
-        // this.idPlanta = 1;
       }) 
-        // this.assignaPlanta(this.plantas)
   })
     
   }      
  ngOnChanges(): void { 
+  //trigger de cambios cuando el select en el header cambia de planta
     this.onPlantaUpdates();
+
+  //trigger de cambios cuando se introduce criteria en los filtros
     parseInt(this.criteria, this.ocupacionFiltro);  
   }
 
   assignaPlanta (plantas: Planta[]) {
-
+    //inicializa la app con visualización de la planta uno
     this.planta = this.plantaUno;
     this.selected = 1;
     this.idPlanta = 1;
 
+    // compara el id de la planta para asignar el array correspondiente a la variable 'planta' que contiene la planta actual
      for (let planta of plantas) {
         if (planta.idPlanta == 1) {
           this.plantaUno = planta
@@ -75,45 +74,14 @@ ngOnInit(): void {
           this.plantaTres = planta
         }
     }
-    console.log(plantas)
-    // this.planta = this.plantaUno; 
-    // this.selected = 1;
-    // this.idPlanta = 1;
   }
-    
-  successNotification() {
-    Swal.fire({
-      title: 'Nueva sala añadida con éxito',
-      showConfirmButton: false,
-      icon: 'success',
-      timer: 1000
-    });
-  }
-
-  borradoNotification() {
-    Swal.fire({
-      title: 'Sala eliminada con éxito',
-      showConfirmButton: true,
-      icon: 'warning',
-      timer: 1000
-    });
-  }
-
-  
-  modificarSalaSuccessNotification() {
-    Swal.fire( {title: 'Cambios guardados!',
-      showConfirmButton: false,
-      icon: 'success',
-      timer: 1000
-    }
-  );
- }
   
 
   async addSala(salas: any): Promise<any> {
   
     await this.dataSvc.addNewSala(salas).subscribe(res => {
       this.planta.salas.push(res);
+      this.cd.detectChanges();
       this.successNotification();  
      })
      
@@ -122,7 +90,7 @@ ngOnInit(): void {
 
    async modificarSala(sala: Sala) :Promise<void> {
     if(this.planta.idPlanta == 1) {
-   //logica para añadir cambios en planta 1
+   //logica para añadir cambios en planta Uno
       await  this.dataSvc.updateSala(sala).subscribe(() => {
 
        const tempArray = this.plantaUno.salas.filter(element => sala.id != element.id)
@@ -139,7 +107,6 @@ ngOnInit(): void {
         this.plantaDos.salas = [...tempArray, sala];
         this.modificarSalaSuccessNotification(); 
       }) 
-  
 
     } else if (this.planta.idPlanta == 3) {
     //logica para añadir camios en planta tres
@@ -167,7 +134,7 @@ ngOnInit(): void {
    async deleteSala(idPlanta : number, idSala : number): Promise<any> {
 
     await this.dataSvc.deleteSala(idPlanta).subscribe(() => {
-    console.log('borrado en planta')
+    
     if(idPlanta == 1) {
 
       const tempArray = this.plantaUno.salas.filter(sala => sala.id != idSala)
@@ -183,8 +150,35 @@ ngOnInit(): void {
       const tempArray = this.plantaTres.salas.filter(sala => sala.id != idSala)
       this.plantaTres.salas = [...tempArray]
     }
+      this.cd.detectChanges();
       this.borradoNotification();
     })
    
    }
+
+   successNotification() {
+    Swal.fire({
+      title: 'Nueva sala añadida con éxito',
+      showConfirmButton: false,
+      icon: 'success',
+      timer: 1000
+    });
+  }
+  borradoNotification() {
+    Swal.fire({
+      title: 'Sala eliminada con éxito',
+      showConfirmButton: false,
+      icon: 'warning',
+      timer: 1000
+    });
+  }
+  
+  modificarSalaSuccessNotification() {
+    Swal.fire( {title: 'Cambios guardados!',
+      showConfirmButton: false,
+      icon: 'success',
+      timer: 1000
+    }
+  );
+ }
 }

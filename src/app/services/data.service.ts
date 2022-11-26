@@ -20,15 +20,11 @@ export class DataService {
   addNewSala(salas: any): Observable <Sala> {
     let id;
     if(!salas.length){
-      id = 1;
+        id = 1;
     } else {
-      id = salas[salas.length - 1].id + 1;
-    }
+        id = salas[salas.length - 1].id + 1;
+     }
 
-    console.log('id en service')
-    console.log(id)
-    console.log('salas en service')
-    console.log(salas)
     const body = { 
                    id: 9,
                    max: 100,
@@ -36,9 +32,11 @@ export class DataService {
                   }
     return this.http.post<Sala>(this.API, body)
    }
+
   getSalas(): Observable <Planta[]> {
     return this.http.get<Planta[]>(this.API)
    }
+   
   updateSala(sala: Sala):Observable <Sala> {
     const body = {
        max: sala.max,

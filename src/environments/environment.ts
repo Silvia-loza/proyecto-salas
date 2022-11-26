@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  api: 'https://apimocha.com/salassilvia/plantas'
+  api: 'https://apimocha.com/salassilvia/salas'
 };
 
 /*
