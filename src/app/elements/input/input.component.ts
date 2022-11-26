@@ -31,17 +31,7 @@ export class InputComponent {
     ocupacion: 10
    }
 
-  constructor() { }
-   successNotification() {
-      Swal.fire( {title: 'Cambios guardados!',
-        showConfirmButton: false,
-        icon: 'success',
-        timer: 1000
-      }
-    );
-   }
-  
-  
+  constructor() { }  
   
   
   modificarSala(id: number, ocupacion: number, max: number): void {
@@ -49,7 +39,6 @@ export class InputComponent {
     this.salaModificar.ocupacion = ocupacion;
     this.salaModificar.max = max;
     this.modificarSalas.emit(this.salaModificar);
-    this.successNotification();
   }
 
   borrarSala (id: number): void {

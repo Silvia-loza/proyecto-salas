@@ -3,6 +3,7 @@ import { Sala } from 'src/app/models/Sala';
 import { DataService } from 'src/app/services/data.service';
 import Swal from 'sweetalert2';
 import { Planta } from '../../models/Planta';
+
 @Component({
   selector: 'app-planta',
   templateUrl: './planta.component.html',
@@ -28,17 +29,23 @@ constructor(private readonly dataSvc: DataService) {}
 ngOnInit(): void {
 
   //Petición a API
+  console.log(this.plantas)
   this.dataSvc.getSalas()
   .subscribe(res => {
       this.data = [...res];
       this.plantas = this.data;
       this.plantas.map(planta => { 
-        if(planta.idPlanta == 1){this.plantaUno = planta
-        } else if (planta.idPlanta == 2){this.plantaDos = planta;
-        } else { this.plantaTres = planta}
-        this.planta = this.plantaUno;
-        this.selected = 1;
-        this.idPlanta = 1;
+        if(planta.idPlanta == 1){
+          this.plantaUno = planta
+          this.planta = this.plantaUno;
+        } else if (planta.idPlanta == 2)
+        {this.plantaDos = planta;
+        } else { 
+          this.plantaTres = planta
+        }
+       
+        // this.selected = 1;
+        // this.idPlanta = 1;
       }) 
         // this.assignaPlanta(this.plantas)
   })
@@ -88,6 +95,17 @@ ngOnInit(): void {
     });
   }
 
+  
+  modificarSalaSuccessNotification() {
+    Swal.fire( {title: 'Cambios guardados!',
+      showConfirmButton: false,
+      icon: 'success',
+      timer: 1000
+    }
+  );
+ }
+  
+
   async addSala(salas: any): Promise<any> {
   
     await this.dataSvc.addNewSala(salas).subscribe(res => {
@@ -98,21 +116,32 @@ ngOnInit(): void {
       
    }
 
-   modificarSala(sala: any) :void {
+   async modificarSala(sala: Sala) :Promise<void> {
     if(this.planta.idPlanta == 1) {
    //logica para añadir cambios en planta 1
       for (let salaArray of this.plantaUno.salas) {
         if (salaArray.id == sala.id){
-          salaArray.ocupacion = sala.ocupacion;
-          salaArray.max = sala.max;
+
+         await  this.dataSvc.updateSala(sala).subscribe(res => {
+          console.log('res en planta 1')
+          console.log(res)
+            salaArray.ocupacion = res.ocupacion
+            salaArray.max = res.max;
+            this.modificarSalaSuccessNotification();  
+          })
         }
       }
        //logica para añadir camios en planta dos
     } else if (this.planta.idPlanta == 2){
        for (let salaArray of this.plantaDos.salas) {
         if (salaArray.id == sala.id){
-        salaArray.ocupacion = sala.ocupacion;
-        salaArray.max = sala.max;
+        await  this.dataSvc.updateSala(sala).subscribe(res => {
+               console.log('res en planta 2')
+               console.log(res)
+              salaArray.ocupacion = res.ocupacion
+              salaArray.max = res.max;
+              this.modificarSalaSuccessNotification();  
+          })
          } 
        }
 
@@ -120,11 +149,18 @@ ngOnInit(): void {
     //logica para añadir camios en planta
       for (let salaArray of this.plantaTres.salas) {
        if (salaArray.id == sala.id){
-       salaArray.ocupacion = sala.ocupacion;
-       salaArray.max = sala.max;
+       await  this.dataSvc.updateSala(sala).subscribe(res => {
+            console.log('res en planta 3')
+            console.log(res)
+            salaArray.ocupacion = res.ocupacion
+            salaArray.max = res.max;
+            this.modificarSalaSuccessNotification();  
+          })
         } 
       }
    }
+
+  //  this.dataSvc.updateSala(sala).subscribe(res => {})
   }
 
    onPlantaUpdates(): void {

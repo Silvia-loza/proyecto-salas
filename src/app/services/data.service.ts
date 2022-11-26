@@ -39,9 +39,11 @@ export class DataService {
   getSalas(): Observable <Planta[]> {
     return this.http.get<Planta[]>(this.API)
    }
-  updateSala(sala: Sala):Observable <void> {
-    const body = {id: sala.id}
-    return this.http.put<void>(`${this.API}/${sala.id}`, body)
+  updateSala(sala: Sala):Observable <Sala> {
+    const body = {
+       max: sala.max,
+       ocupacion: sala.ocupacion}
+    return this.http.put<Sala>(`${this.API}/${sala.id}`, body)
    }
   deleteSala(id: any):Observable <void> { 
     console.log('borrado en servicio')

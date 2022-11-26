@@ -1,7 +1,7 @@
 <form #showSalaForm="ngForm" class="header">
     <label for="selected-sala" id="main-title">Salas</label>
       <select (click)="onSubmit(showSalaForm.value.selected)" name="selected" id="selected" [(ngModel)] ="selected">
-      <option disabled selected>Elige una planta</option>
+      <option value=0 disabled selected>Elige una planta</option>
       <option value=1>Planta 1</option>
       <option value=2>Planta 2</option>
       <option value=3>Planta 3</option>
