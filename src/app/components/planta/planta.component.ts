@@ -19,10 +19,14 @@ export class PlantaComponent implements OnInit {
   public criteria !: any;
   public ocupacionFiltro !: any;
   public plantas : Planta[] = [];
-  public plantaUno : Planta = {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
-  public plantaDos : Planta =  {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
-  public plantaTres : Planta = {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
+  public plantaUno !: Planta
+  public plantaDos !: Planta
+  public plantaTres !: Planta
   public data !: any;
+
+  // = {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
+  // =  {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
+  // = {idPlanta: 0, salas: [{id: 0, max: 0, ocupacion: 0}]};
 
 constructor(private readonly dataSvc: DataService) {}
 
@@ -38,8 +42,8 @@ ngOnInit(): void {
         if(planta.idPlanta == 1){
           this.plantaUno = planta
           this.planta = this.plantaUno;
-        } else if (planta.idPlanta == 2)
-        {this.plantaDos = planta;
+        } else if (planta.idPlanta == 2) {
+          this.plantaDos = planta;
         } else { 
           this.plantaTres = planta
         }
@@ -89,7 +93,7 @@ ngOnInit(): void {
   borradoNotification() {
     Swal.fire({
       title: 'Sala eliminada con éxito',
-      showConfirmButton: false,
+      showConfirmButton: true,
       icon: 'warning',
       timer: 1000
     });
@@ -119,49 +123,36 @@ ngOnInit(): void {
    async modificarSala(sala: Sala) :Promise<void> {
     if(this.planta.idPlanta == 1) {
    //logica para añadir cambios en planta 1
-      for (let salaArray of this.plantaUno.salas) {
-        if (salaArray.id == sala.id){
+      await  this.dataSvc.updateSala(sala).subscribe(() => {
 
-         await  this.dataSvc.updateSala(sala).subscribe(res => {
-          console.log('res en planta 1')
-          console.log(res)
-            salaArray.ocupacion = res.ocupacion
-            salaArray.max = res.max;
-            this.modificarSalaSuccessNotification();  
-          })
-        }
-      }
+       const tempArray = this.plantaUno.salas.filter(element => sala.id != element.id)
+       this.plantaUno.salas = [...tempArray, sala]
+       this.modificarSalaSuccessNotification();  
+       })
+
        //logica para añadir camios en planta dos
     } else if (this.planta.idPlanta == 2){
-       for (let salaArray of this.plantaDos.salas) {
-        if (salaArray.id == sala.id){
-        await  this.dataSvc.updateSala(sala).subscribe(res => {
-               console.log('res en planta 2')
-               console.log(res)
-              salaArray.ocupacion = res.ocupacion
-              salaArray.max = res.max;
-              this.modificarSalaSuccessNotification();  
-          })
-         } 
-       }
+
+      await  this.dataSvc.updateSala(sala).subscribe(() => {
+
+        const tempArray = this.plantaDos.salas.filter(element => sala.id != element.id);
+        this.plantaDos.salas = [...tempArray, sala];
+        this.modificarSalaSuccessNotification(); 
+      }) 
+  
 
     } else if (this.planta.idPlanta == 3) {
-    //logica para añadir camios en planta
-      for (let salaArray of this.plantaTres.salas) {
-       if (salaArray.id == sala.id){
-       await  this.dataSvc.updateSala(sala).subscribe(res => {
-            console.log('res en planta 3')
-            console.log(res)
-            salaArray.ocupacion = res.ocupacion
-            salaArray.max = res.max;
-            this.modificarSalaSuccessNotification();  
-          })
-        } 
-      }
-   }
+    //logica para añadir camios en planta tres
+      
+    await  this.dataSvc.updateSala(sala).subscribe(() => {
 
-  //  this.dataSvc.updateSala(sala).subscribe(res => {})
-  }
+      const tempArray = this.plantaTres.salas.filter(element => sala.id != element.id);
+      this.plantaTres.salas = [...tempArray, sala];
+      this.modificarSalaSuccessNotification();  
+    }) 
+      
+    }
+ }
 
    onPlantaUpdates(): void {
     if(this.idPlanta == 1){
@@ -176,7 +167,6 @@ ngOnInit(): void {
    async deleteSala(idPlanta : number, idSala : number): Promise<any> {
 
     await this.dataSvc.deleteSala(idPlanta).subscribe(() => {
-   
     console.log('borrado en planta')
     if(idPlanta == 1) {
 
