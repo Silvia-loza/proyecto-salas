@@ -174,35 +174,25 @@ ngOnInit(): void {
   }
 
    async deleteSala(idPlanta : number, idSala : number): Promise<any> {
-    let indexBorrado;
-    await this.dataSvc.deleteSala(idPlanta).subscribe(res => {
-   
-      console.log('borrado en planta')
-    if(idPlanta == 1) {
-         for (let salaBorrar of this.plantaUno.salas) { 
-           if (salaBorrar.id == idSala){
-                indexBorrado = this.plantaUno.salas.indexOf(salaBorrar)
-                this.plantaUno.salas.splice(indexBorrado, 1)
-           }
-         }
-          
-    } else if (this.planta.idPlanta == 2){
-      for (let salaBorrar of this.plantaDos.salas) { 
-        if (salaBorrar.id == idSala){
-             indexBorrado = this.plantaDos.salas.indexOf(salaBorrar)
-             this.plantaDos.salas.splice(indexBorrado, 1)
-          }
-        }           
-    } else if (this.planta.idPlanta == 3) {     
-      for (let salaBorrar of this.plantaTres.salas) { 
-        if (salaBorrar.id == idSala){
-             indexBorrado = this.plantaTres.salas.indexOf(salaBorrar)
-             this.plantaTres.salas.splice(indexBorrado, 1)
-             
-          }
-        }           
-      }
 
+    await this.dataSvc.deleteSala(idPlanta).subscribe(() => {
+   
+    console.log('borrado en planta')
+    if(idPlanta == 1) {
+
+      const tempArray = this.plantaUno.salas.filter(sala => sala.id != idSala)
+      this.plantaUno.salas = [...tempArray]
+          
+    } else if (idPlanta == 2) {
+
+      const tempArray = this.plantaDos.salas.filter(sala => sala.id != idSala)
+      this.plantaDos.salas = [...tempArray]
+   
+    } else if (idPlanta == 3) {     
+
+      const tempArray = this.plantaTres.salas.filter(sala => sala.id != idSala)
+      this.plantaTres.salas = [...tempArray]
+    }
       this.borradoNotification();
     })
    
