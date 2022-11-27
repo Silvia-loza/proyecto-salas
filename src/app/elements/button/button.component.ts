@@ -8,7 +8,7 @@ interface button {
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss']
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
 button = {
   title: "Modificar",
   width: "10em"
@@ -16,9 +16,5 @@ button = {
 @Input() label: string = "Modificar"
 @Input() ancho: string = "10em"
   constructor() { }
-
-  ngOnInit(): void {
-  }
   
-
 }

@@ -1,14 +1,37 @@
- <div class="main-container">
-   <div class="title-container"> 
-      <h1>Planta {{idPlanta}}</h1>
-      <input  class="search-box" name="criteria" id="criteria" type="number" placeholder="Filtra por máxima capacidad" [(ngModel)]="criteria">
-      <input  class="search-box" name="ocupacionFiltro" id="ocupacionFiltro" type="number" placeholder="Filtra por ocupacion" [(ngModel)]="ocupacionFiltro">
-      <app-button (click)="addSala(planta.salas)" [label]="'Añadir sala'"></app-button>
-      
-   </div>
-   <div *ngIf="plantas.length != 0 " class="card-container">
-        <div *ngFor="let sala of (planta.salas | filter: criteria | filterOccupation: ocupacionFiltro) ">
-          <app-sala (borraSalaEvSal)="deleteSala(planta.idPlanta, sala.id)" [ocupacion]="sala.ocupacion" (nuevaOcupacion)="modificarSala($event)"  [max]="sala.max" [salaId]="sala.id"></app-sala>   
-         </div>
+<div class="main-container">
+    <div class="title-container">
+        <h1>Planta {{ idPlanta }}</h1>
+        <input
+            class="search-box"
+            name="criteria"
+            id="criteria"
+            type="number"
+            placeholder="Filtra por máxima capacidad"
+            [(ngModel)]="criteria"
+        />
+        <input
+            class="search-box"
+            name="ocupacionFiltro"
+            id="ocupacionFiltro"
+            type="number"
+            placeholder="Filtra por ocupacion"
+            [(ngModel)]="ocupacionFiltro"
+        />
+        <app-button (click)="addSala(planta.salas)" [label]="'Añadir sala'"></app-button>
+    </div>
+    <div *ngIf="plantas.length !== 0" class="card-container">
+        <div
+            *ngFor="
+                let sala of planta.salas | filter : criteria | filterOccupation : ocupacionFiltro
+            "
+        >
+            <app-sala
+                (borraSalaEvSal)="deleteSala(planta.idPlanta, sala.id)"
+                [ocupacion]="sala.ocupacion"
+                (nuevaOcupacion)="modificarSala($event)"
+                [max]="sala.max"
+                [salaId]="sala.id"
+            ></app-sala>
+        </div>
     </div>
 </div>
