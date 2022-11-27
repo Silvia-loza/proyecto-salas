@@ -31,12 +31,13 @@ export class PlantaComponent implements OnInit {
     public plantaDos!: Planta;
     public plantaTres!: Planta;
     public data!: any;
+    public loading: Boolean = true;
 
     constructor(private readonly dataSvc: DataService, private cd: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         //Petición a API
-
+        this.loading = true;
         this.dataSvc.getSalas().subscribe((res) => {
             this.data = [...res];
             this.plantas = this.data;
@@ -52,6 +53,8 @@ export class PlantaComponent implements OnInit {
                 }
                 this.cd.detectChanges();
             });
+
+            this.loading = false;
         });
     }
     ngOnChanges(): void {
@@ -81,19 +84,24 @@ export class PlantaComponent implements OnInit {
     }
 
     async addSala(salas: any): Promise<any> {
+        this.loading = true;
         await this.dataSvc.addNewSala(salas).subscribe((res) => {
             this.planta.salas.push(res);
+            this.loading = false;
             this.cd.detectChanges();
             this.successNotification();
         });
     }
 
     async modificarSala(sala: Sala): Promise<void> {
+        this.loading = true;
         if (this.planta.idPlanta == 1) {
             //logica para añadir cambios en planta Uno
             await this.dataSvc.updateSala(sala).subscribe(() => {
                 const tempArray = this.plantaUno.salas.filter((element) => sala.id != element.id);
                 this.plantaUno.salas = [...tempArray, sala];
+                this.loading = false;
+                this.cd.detectChanges();
                 this.modificarSalaSuccessNotification();
             });
 
@@ -102,6 +110,8 @@ export class PlantaComponent implements OnInit {
             await this.dataSvc.updateSala(sala).subscribe(() => {
                 const tempArray = this.plantaDos.salas.filter((element) => sala.id != element.id);
                 this.plantaDos.salas = [...tempArray, sala];
+                this.loading = false;
+                this.cd.detectChanges();
                 this.modificarSalaSuccessNotification();
             });
         } else if (this.planta.idPlanta == 3) {
@@ -110,6 +120,8 @@ export class PlantaComponent implements OnInit {
             await this.dataSvc.updateSala(sala).subscribe(() => {
                 const tempArray = this.plantaTres.salas.filter((element) => sala.id != element.id);
                 this.plantaTres.salas = [...tempArray, sala];
+                this.loading = false;
+                this.cd.detectChanges();
                 this.modificarSalaSuccessNotification();
             });
         }
@@ -126,6 +138,7 @@ export class PlantaComponent implements OnInit {
     }
 
     async deleteSala(idPlanta: number, idSala: number): Promise<any> {
+        this.loading = true;
         await this.dataSvc.deleteSala(idPlanta).subscribe(() => {
             if (idPlanta == 1) {
                 const tempArray = this.plantaUno.salas.filter((sala) => sala.id != idSala);
@@ -137,7 +150,9 @@ export class PlantaComponent implements OnInit {
                 const tempArray = this.plantaTres.salas.filter((sala) => sala.id != idSala);
                 this.plantaTres.salas = [...tempArray];
             }
+            this.loading = false;
             this.cd.detectChanges();
+
             this.borradoNotification();
         });
     }
